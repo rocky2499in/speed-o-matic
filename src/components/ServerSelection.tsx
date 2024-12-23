@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { MapPin } from "lucide-react";
 import {
   Select,
@@ -60,8 +59,8 @@ interface ServerSelectionProps {
 const ServerSelection = ({ selectedServer, onServerChange }: ServerSelectionProps) => {
   return (
     <div className="w-full space-y-4">
-      <div className="flex items-center space-x-2">
-        <MapPin className="w-4 h-4 text-primary" />
+      <div className="flex items-center space-x-2 text-primary">
+        <MapPin className="w-5 h-5" />
         <span className="text-sm font-medium">Select Server Location</span>
       </div>
       <Select
@@ -71,12 +70,16 @@ const ServerSelection = ({ selectedServer, onServerChange }: ServerSelectionProp
           if (server) onServerChange(server);
         }}
       >
-        <SelectTrigger className="w-full">
+        <SelectTrigger className="w-full bg-background/50 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-colors">
           <SelectValue placeholder="Select a server" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="bg-background/95 backdrop-blur-sm border-primary/20">
           {servers.map((server) => (
-            <SelectItem key={server.id} value={server.id}>
+            <SelectItem 
+              key={server.id} 
+              value={server.id}
+              className="hover:bg-primary/10 cursor-pointer transition-colors"
+            >
               {server.name} - {server.location}
             </SelectItem>
           ))}

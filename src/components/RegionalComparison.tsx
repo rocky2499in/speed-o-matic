@@ -15,19 +15,19 @@ const RegionalComparison = ({ selectedServer, currentSpeed }: RegionalComparison
     : `${(100 - comparison).toFixed(1)}% slower than average`;
 
   return (
-    <div className="space-y-4 bg-secondary/50 p-6 rounded-lg">
-      <h3 className="text-sm font-medium">Regional Comparison</h3>
-      <div className="space-y-2">
+    <div className="space-y-4 bg-secondary/30 backdrop-blur-sm p-6 rounded-xl shadow-sm transition-all hover:bg-secondary/40">
+      <h3 className="text-sm font-medium text-foreground/90">Regional Comparison</h3>
+      <div className="space-y-3">
         <div className="flex justify-between text-sm">
-          <span>Your Speed</span>
-          <span>{currentSpeed.toFixed(1)} Mbps</span>
+          <span className="text-foreground/70">Your Speed</span>
+          <span className="font-medium text-primary">{currentSpeed.toFixed(1)} Mbps</span>
         </div>
         <Progress value={comparison} className="h-2" />
         <div className="flex justify-between text-sm">
-          <span>Regional Average</span>
-          <span>{selectedServer.averageSpeed} Mbps</span>
+          <span className="text-foreground/70">Regional Average</span>
+          <span className="font-medium">{selectedServer.averageSpeed} Mbps</span>
         </div>
-        <p className="text-sm text-muted-foreground mt-2">
+        <p className="text-sm text-foreground/60 mt-2">
           {comparisonText}
         </p>
       </div>
