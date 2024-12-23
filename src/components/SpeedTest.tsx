@@ -4,6 +4,8 @@ import { toast } from "@/components/ui/use-toast";
 import { WifiHigh, SignalHigh, Moon, Sun, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
+import ServerSelection, { Server, servers } from "./ServerSelection";
+import RegionalComparison from "./RegionalComparison";
 
 interface NetworkInfo {
   ip: string;
@@ -24,6 +26,7 @@ const SpeedTest = () => {
   const [progress, setProgress] = useState(0);
   const [testPhase, setTestPhase] = useState<"download" | "upload" | "complete">("download");
   const { theme, setTheme } = useTheme();
+  const [selectedServer, setSelectedServer] = useState<Server>(servers[0]);
 
   const fetchNetworkInfo = async () => {
     try {
@@ -53,10 +56,8 @@ const SpeedTest = () => {
     setProgress(0);
     setTestPhase("download");
 
-    // Fetch real network info while speed test is running
     const networkData = await fetchNetworkInfo();
 
-    // Simulate download test
     const downloadInterval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
@@ -68,7 +69,6 @@ const SpeedTest = () => {
       });
     }, 100);
 
-    // After download completes, simulate upload test
     setTimeout(() => {
       const uploadInterval = setInterval(() => {
         setProgress((prev) => {
@@ -82,7 +82,6 @@ const SpeedTest = () => {
       }, 100);
     }, 5000);
 
-    // Simulate final results
     setTimeout(() => {
       setIsLoading(false);
       setNetworkInfo({
@@ -100,7 +99,7 @@ const SpeedTest = () => {
 
     const shareData = {
       title: 'Speedcheck Digital Results',
-      text: `My internet speed test results:\nDownload: ${networkInfo.downloadSpeed} Mbps\nUpload: ${networkInfo.uploadSpeed} Mbps\nLatency: ${networkInfo.latency} ms\nISP: ${networkInfo.isp}`,
+      text: `My internet speed test results:\nDownload: ${networkInfo.downloadSpeed} Mbps\nUpload: ${networkInfo.uploadSpeed} Mbps\nLatency: ${networkInfo.latency} ms\nISP: ${networkInfo.isp}\nServer: ${selectedServer.location}`,
       url: window.location.href
     };
 
@@ -129,7 +128,7 @@ const SpeedTest = () => {
 
   useEffect(() => {
     simulateSpeedTest();
-  }, []);
+  }, [selectedServer]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4">
@@ -154,8 +153,10 @@ const SpeedTest = () => {
           </Button>
         </div>
 
+        <ServerSelection selectedServer={selectedServer} onServerChange={setSelectedServer} />
+
         <h2 className="text-xl font-semibold text-foreground">
-          Internet Speed Test
+          Testing Speed to {selectedServer.location}
         </h2>
 
         {isLoading ? (
@@ -188,6 +189,11 @@ const SpeedTest = () => {
                     <div className="text-sm text-foreground/80">Upload (Mbps)</div>
                   </div>
                 </div>
+                
+                <RegionalComparison 
+                  selectedServer={selectedServer}
+                  currentSpeed={networkInfo.downloadSpeed}
+                />
                 
                 <div className="space-y-4 bg-secondary/50 p-6 rounded-lg">
                   <div className="grid grid-cols-2 gap-4 text-sm">
