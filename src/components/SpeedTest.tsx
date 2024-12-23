@@ -85,31 +85,45 @@ const SpeedTest = () => {
   }, [selectedServer]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-background p-4 md:p-8">
+    <main className="flex flex-col items-center justify-center min-h-screen bg-background p-4 md:p-8">
       <div className="w-full max-w-md mx-auto space-y-8 animate-fade-in">
-        <SpeedTestHeader />
+        <header>
+          <SpeedTestHeader />
+        </header>
         
-        <div className="bg-secondary/30 backdrop-blur-sm rounded-xl p-6 shadow-lg space-y-8">
-          <ServerSelection selectedServer={selectedServer} onServerChange={setSelectedServer} />
+        <section 
+          className="bg-secondary/30 backdrop-blur-sm rounded-xl p-6 shadow-lg space-y-8"
+          aria-label="Speed Test Section"
+        >
+          <ServerSelection 
+            selectedServer={selectedServer} 
+            onServerChange={setSelectedServer}
+            aria-label="Server Selection"
+          />
           
           <h2 className="text-xl font-semibold text-foreground/90 tracking-tight">
             Testing Speed to {selectedServer.location}
           </h2>
 
           {isLoading ? (
-            <SpeedTestProgress progress={progress} testPhase={testPhase} />
+            <SpeedTestProgress 
+              progress={progress} 
+              testPhase={testPhase}
+              aria-live="polite"
+            />
           ) : (
             networkInfo && (
               <SpeedTestResults 
                 networkInfo={networkInfo}
                 onTestAgain={simulateSpeedTest}
                 selectedServer={selectedServer}
+                aria-label="Speed Test Results"
               />
             )
           )}
-        </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 
