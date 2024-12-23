@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "@/components/ui/use-toast";
+import { Wifi, Signal } from "lucide-react";
 
 interface NetworkInfo {
   ip: string;
@@ -98,9 +99,15 @@ const SpeedTest = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-white p-4">
       <div className="text-center space-y-8 animate-fade-in max-w-md w-full">
-        <h1 className="text-2xl font-semibold text-gray-700 mb-8">
+        <div className="flex items-center justify-center space-x-2 mb-4">
+          <Signal className="w-8 h-8 text-primary" />
+          <h1 className="text-2xl font-bold text-primary">Speedcheck Digital</h1>
+          <Wifi className="w-8 h-8 text-primary" />
+        </div>
+
+        <h2 className="text-xl font-semibold text-gray-700">
           Internet Speed Test
-        </h1>
+        </h2>
 
         {isLoading ? (
           <div className="space-y-6">
