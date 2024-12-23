@@ -13,7 +13,7 @@ export const Footer = () => {
           <Button 
             variant="link" 
             className="text-primary font-medium hover:text-primary/80 transition-colors"
-            onClick={() => window.open('https://kinematicdigital.com', '_blank')}
+            onClick={() => window.open('https://kinematic.digital', '_blank')}
           >
             A Product by Kinematic Digital
           </Button>
