@@ -1,4 +1,4 @@
-import { Share2 } from "lucide-react";
+import { Share2, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { NetworkInfo } from "./types";
@@ -39,6 +39,13 @@ export const SpeedTestResults = ({ networkInfo, onTestAgain, selectedServer }: S
         variant: "destructive",
       });
     }
+  };
+
+  const handleWhatsAppShare = () => {
+    const text = encodeURIComponent(
+      `My internet speed test results:\nDownload: ${networkInfo.downloadSpeed} Mbps\nUpload: ${networkInfo.uploadSpeed} Mbps\nLatency: ${networkInfo.latency} ms\nISP: ${networkInfo.isp}\nServer: ${selectedServer.location}\n\nTest your speed at: ${window.location.href}`
+    );
+    window.open(`https://wa.me/?text=${text}`, '_blank');
   };
 
   return (
@@ -95,6 +102,14 @@ export const SpeedTestResults = ({ networkInfo, onTestAgain, selectedServer }: S
         >
           <Share2 className="h-4 w-4" />
           Share
+        </Button>
+        <Button
+          onClick={handleWhatsAppShare}
+          variant="secondary"
+          className="flex gap-2"
+        >
+          <MessageCircle className="h-4 w-4" />
+          WhatsApp
         </Button>
       </div>
     </div>
