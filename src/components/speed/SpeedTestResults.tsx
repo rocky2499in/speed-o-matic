@@ -59,15 +59,15 @@ export const SpeedTestResults = ({ networkInfo, onTestAgain, selectedServer }: S
       </div>
 
       <div className="space-y-4 bg-secondary/50 p-6 rounded-lg">
-        <div className="grid grid-cols-2 gap-4 text-sm">
+        <div className="grid grid-cols-[120px_1fr] md:grid-cols-[140px_1fr] gap-4 text-sm">
           <div className="text-left text-foreground/80">IP Address</div>
-          <div className="text-right font-medium">{networkInfo.ip}</div>
+          <div className="text-right font-medium break-all">{networkInfo.ip}</div>
           
           <div className="text-left text-foreground/80">Latency</div>
           <div className="text-right font-medium">{networkInfo.latency} ms</div>
           
           <div className="text-left text-foreground/80">ISP</div>
-          <div className="text-right font-medium">{networkInfo.isp}</div>
+          <div className="text-right font-medium truncate" title={networkInfo.isp}>{networkInfo.isp}</div>
         </div>
       </div>
 
