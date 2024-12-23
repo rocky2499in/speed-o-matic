@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Progress } from "@/components/ui/progress";
+import { toast } from "@/components/ui/use-toast";
 
 interface NetworkInfo {
   ip: string;
@@ -9,17 +10,47 @@ interface NetworkInfo {
   isp: string;
 }
 
+interface IpApiResponse {
+  ip: string;
+  org: string;
+}
+
 const SpeedTest = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [networkInfo, setNetworkInfo] = useState<NetworkInfo | null>(null);
   const [progress, setProgress] = useState(0);
   const [testPhase, setTestPhase] = useState<"download" | "upload" | "complete">("download");
 
+  const fetchNetworkInfo = async () => {
+    try {
+      const response = await fetch('https://ipapi.co/json/');
+      const data: IpApiResponse = await response.json();
+      return {
+        ip: data.ip,
+        isp: data.org || 'Unknown ISP'
+      };
+    } catch (error) {
+      console.error('Error fetching network info:', error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch network information. Using fallback data.",
+        variant: "destructive",
+      });
+      return {
+        ip: "192.168.1." + Math.floor(Math.random() * 255),
+        isp: "Sample ISP Provider"
+      };
+    }
+  };
+
   const simulateSpeedTest = async () => {
     setIsLoading(true);
     setNetworkInfo(null);
     setProgress(0);
     setTestPhase("download");
+
+    // Fetch real network info while speed test is running
+    const networkData = await fetchNetworkInfo();
 
     // Simulate download test
     const downloadInterval = setInterval(() => {
@@ -51,11 +82,11 @@ const SpeedTest = () => {
     setTimeout(() => {
       setIsLoading(false);
       setNetworkInfo({
-        ip: "192.168.1." + Math.floor(Math.random() * 255),
+        ip: networkData.ip,
         downloadSpeed: Math.floor(Math.random() * 100) + 50,
         uploadSpeed: Math.floor(Math.random() * 50) + 30,
         latency: Math.floor(Math.random() * 50) + 10,
-        isp: "Sample ISP Provider",
+        isp: networkData.isp,
       });
     }, 10000);
   };
