@@ -34,6 +34,14 @@ const servers: Server[] = [
     averageSpeed: 78,
   },
   {
+    id: "us-central",
+    name: "US Central",
+    location: "Dallas, TX",
+    latitude: 32.7767,
+    longitude: -96.7970,
+    averageSpeed: 82,
+  },
+  {
     id: "eu-central",
     name: "EU Central",
     location: "Frankfurt, DE",
@@ -42,12 +50,36 @@ const servers: Server[] = [
     averageSpeed: 92,
   },
   {
+    id: "eu-west",
+    name: "EU West",
+    location: "London, UK",
+    latitude: 51.5074,
+    longitude: -0.1278,
+    averageSpeed: 89,
+  },
+  {
     id: "asia-east",
     name: "Asia East",
     location: "Tokyo, JP",
     latitude: 35.6762,
     longitude: 139.6503,
     averageSpeed: 88,
+  },
+  {
+    id: "asia-south",
+    name: "Asia South",
+    location: "Singapore, SG",
+    latitude: 1.3521,
+    longitude: 103.8198,
+    averageSpeed: 91,
+  },
+  {
+    id: "oceania",
+    name: "Oceania",
+    location: "Sydney, AU",
+    latitude: -33.8688,
+    longitude: 151.2093,
+    averageSpeed: 76,
   },
 ];
 

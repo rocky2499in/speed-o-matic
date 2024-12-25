@@ -1,8 +1,9 @@
-import { Share2, MessageCircle } from "lucide-react";
+import { Share2, MessageCircle, Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { NetworkInfo } from "./types";
 import { QRCodeSVG } from "qrcode.react";
+import html2canvas from "html2canvas";
 
 interface SpeedTestResultsProps {
   networkInfo: NetworkInfo;
@@ -48,8 +49,35 @@ export const SpeedTestResults = ({ networkInfo, onTestAgain, selectedServer }: S
     window.open(`https://wa.me/?text=${text}`, '_blank');
   };
 
+  const handleScreenshot = async () => {
+    try {
+      const element = document.querySelector('.speed-test-results');
+      if (!element) return;
+      
+      const canvas = await html2canvas(element);
+      const dataUrl = canvas.toDataURL('image/png');
+      
+      // Create a temporary link element
+      const link = document.createElement('a');
+      link.download = 'speedtest-results.png';
+      link.href = dataUrl;
+      link.click();
+      
+      toast({
+        title: "Success",
+        description: "Screenshot saved successfully!",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save screenshot",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-8 animate-fade-in speed-test-results">
       <div className="grid grid-cols-2 gap-6">
         <div className="text-center">
           <div className="text-5xl font-bold text-primary mb-2">
@@ -88,7 +116,7 @@ export const SpeedTestResults = ({ networkInfo, onTestAgain, selectedServer }: S
         <p className="text-sm text-foreground/80">Scan to test on your mobile device</p>
       </div>
       
-      <div className="flex gap-4">
+      <div className="flex gap-4 flex-wrap justify-center">
         <Button
           onClick={onTestAgain}
           className="flex-1"
@@ -110,6 +138,14 @@ export const SpeedTestResults = ({ networkInfo, onTestAgain, selectedServer }: S
         >
           <MessageCircle className="h-4 w-4" />
           WhatsApp
+        </Button>
+        <Button
+          onClick={handleScreenshot}
+          variant="secondary"
+          className="flex gap-2"
+        >
+          <Camera className="h-4 w-4" />
+          Screenshot
         </Button>
       </div>
     </div>
