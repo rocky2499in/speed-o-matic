@@ -7,6 +7,7 @@ import { SpeedTestProgress } from "./speed/SpeedTestProgress";
 import { SpeedTestResults } from "./speed/SpeedTestResults";
 import { Footer } from "./speed/Footer";
 import { NetworkInfo } from "./speed/types";
+import { BlogPosts } from "./speed/BlogPosts";
 
 const SpeedTest = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -124,6 +125,8 @@ const SpeedTest = () => {
           )}
         </section>
       </div>
+      
+      <BlogPosts />
       <Footer />
     </main>
   );
