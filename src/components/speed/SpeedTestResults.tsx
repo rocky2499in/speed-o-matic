@@ -51,26 +51,60 @@ export const SpeedTestResults = ({ networkInfo, onTestAgain, selectedServer }: S
 
   const handleScreenshot = async () => {
     try {
-      const element = document.querySelector('.speed-test-results');
+      const element = document.querySelector('.speed-test-results') as HTMLElement;
       if (!element) return;
       
       const canvas = await html2canvas(element);
-      const dataUrl = canvas.toDataURL('image/png');
       
-      // Create a temporary link element
-      const link = document.createElement('a');
-      link.download = 'speedtest-results.png';
-      link.href = dataUrl;
-      link.click();
-      
-      toast({
-        title: "Success",
-        description: "Screenshot saved successfully!",
-      });
+      // Convert canvas to blob
+      canvas.toBlob(async (blob) => {
+        if (!blob) {
+          throw new Error('Failed to create blob');
+        }
+
+        if (navigator.share && blob) {
+          try {
+            const file = new File([blob], 'speedtest-results.png', { type: 'image/png' });
+            await navigator.share({
+              files: [file],
+              title: 'Speed Test Results',
+              text: 'Check out my internet speed test results!'
+            });
+            toast({
+              title: "Success",
+              description: "Screenshot shared successfully!",
+            });
+          } catch (error) {
+            // Fallback to download if sharing fails
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.download = 'speedtest-results.png';
+            link.href = url;
+            link.click();
+            URL.revokeObjectURL(url);
+            toast({
+              title: "Success",
+              description: "Screenshot downloaded successfully!",
+            });
+          }
+        } else {
+          // Fallback for browsers that don't support sharing
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.download = 'speedtest-results.png';
+          link.href = url;
+          link.click();
+          URL.revokeObjectURL(url);
+          toast({
+            title: "Success",
+            description: "Screenshot downloaded successfully!",
+          });
+        }
+      }, 'image/png');
     } catch (error) {
       toast({
         title: "Error",
-        description: "Failed to save screenshot",
+        description: "Failed to capture screenshot",
         variant: "destructive",
       });
     }
