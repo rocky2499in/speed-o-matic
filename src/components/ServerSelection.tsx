@@ -81,6 +81,46 @@ const servers: Server[] = [
     longitude: 151.2093,
     averageSpeed: 76,
   },
+  {
+    id: "eu-north",
+    name: "EU North",
+    location: "Stockholm, SE",
+    latitude: 59.3293,
+    longitude: 18.0686,
+    averageSpeed: 94,
+  },
+  {
+    id: "asia-pacific",
+    name: "Asia Pacific",
+    location: "Seoul, KR",
+    latitude: 37.5665,
+    longitude: 126.9780,
+    averageSpeed: 93,
+  },
+  {
+    id: "india-west",
+    name: "India West",
+    location: "Mumbai, IN",
+    latitude: 19.0760,
+    longitude: 72.8777,
+    averageSpeed: 79,
+  },
+  {
+    id: "brazil-east",
+    name: "Brazil East",
+    location: "São Paulo, BR",
+    latitude: -23.5505,
+    longitude: -46.6333,
+    averageSpeed: 77,
+  },
+  {
+    id: "canada-east",
+    name: "Canada East",
+    location: "Toronto, CA",
+    latitude: 43.6532,
+    longitude: -79.3832,
+    averageSpeed: 86,
+  }
 ];
 
 interface ServerSelectionProps {
