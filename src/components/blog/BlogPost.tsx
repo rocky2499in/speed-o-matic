@@ -3,7 +3,22 @@ import { useParams } from "react-router-dom";
 import { LanguageSelector } from "./LanguageSelector";
 import { BlogContent } from "./BlogContent";
 
-const translations = {
+type Language = "en" | "es" | "de";
+
+interface BlogTranslation {
+  title: string;
+  content: string;
+}
+
+interface CityTranslations {
+  [key: string]: BlogTranslation;
+}
+
+interface Translations {
+  [key: string]: CityTranslations;
+}
+
+const translations: Translations = {
   "new-york-speed-test": {
     en: {
       title: "Internet Speed Test Guide for New York City",
@@ -92,9 +107,9 @@ const translations = {
 
 export const BlogPost = () => {
   const { slug } = useParams();
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState<Language>("en");
   
-  if (!slug || !translations[slug as keyof typeof translations]) {
+  if (!slug || !translations[slug]) {
     return (
       <div className="max-w-4xl mx-auto p-6">
         <h1 className="text-2xl font-bold text-center">Post not found</h1>
@@ -102,7 +117,7 @@ export const BlogPost = () => {
     );
   }
 
-  const post = translations[slug as keyof typeof translations][language as keyof typeof translations[typeof slug]];
+  const post = translations[slug][language as keyof typeof translations[typeof slug]];
 
   if (!post) {
     return (
