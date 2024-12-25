@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { LanguageSelector } from "./LanguageSelector";
 import { BlogContent } from "./BlogContent";
 
-type Language = "en" | "es" | "de";
+type Language = "en" | "es" | "de" | "fr" | "zh";
 
 interface BlogTranslation {
   title: string;
@@ -102,6 +102,48 @@ const translations: Translations = {
         <p>Downtown Chicago and the North Side typically see the fastest speeds, while South and West Side neighborhoods are experiencing ongoing infrastructure upgrades to improve service quality.</p>
       `
     }
+  },
+  "berlin-speed-test": {
+    en: {
+      title: "Internet Speed Test Guide for Berlin",
+      content: `
+        <h2>Berlin's Internet Speed Landscape</h2>
+        <p>As a tech hub in Europe, Berlin offers diverse internet connectivity options across its vibrant neighborhoods.</p>
+        
+        <h3>Average Internet Speeds in Berlin</h3>
+        <ul>
+          <li>Download: 100-500 Mbps</li>
+          <li>Upload: 50-250 Mbps</li>
+          <li>Latency: 10-25ms</li>
+        </ul>
+
+        <h3>Major ISP Performance</h3>
+        <p>Telekom Deutschland leads with fiber and DSL services, while providers like 1&1, Vodafone, and O2 offer competitive broadband options.</p>
+
+        <h3>Neighborhood Insights</h3>
+        <p>Tech-centric areas like Mitte and Prenzlauer Berg typically enjoy higher internet speeds, while some outer districts may have more variable connectivity.</p>
+      `
+    },
+    de: {
+      title: "Leitfaden zum Internet-Geschwindigkeitstest in Berlin",
+      content: `
+        <h2>Berlins Internet-Geschwindigkeitslandschaft</h2>
+        <p>Als Technologie-Hub in Europa bietet Berlin vielfältige Internetverbindungsoptionen in seinen lebendigen Stadtteilen.</p>
+        
+        <h3>Durchschnittliche Internetgeschwindigkeiten in Berlin</h3>
+        <ul>
+          <li>Download: 100-500 Mbps</li>
+          <li>Upload: 50-250 Mbps</li>
+          <li>Latenz: 10-25ms</li>
+        </ul>
+
+        <h3>Leistung der wichtigsten ISPs</h3>
+        <p>Telekom Deutschland führt mit Glasfaser- und DSL-Diensten, während Anbieter wie 1&1, Vodafone und O2 wettbewerbsfähige Breitbandoptionen anbieten.</p>
+
+        <h3>Einblicke in die Stadtteile</h3>
+        <p>Technologieorientierte Gebiete wie Mitte und Prenzlauer Berg verfügen typischerweise über höhere Internetgeschwindigkeiten, während einige Außenbezirke eine variablere Konnektivität aufweisen.</p>
+      `
+    }
   }
 };
 
@@ -117,7 +159,7 @@ export const BlogPost = () => {
     );
   }
 
-  const post = translations[slug][language as keyof typeof translations[typeof slug]];
+  const post = translations[slug][language];
 
   if (!post) {
     return (

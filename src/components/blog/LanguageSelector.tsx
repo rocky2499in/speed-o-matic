@@ -8,20 +8,22 @@ const languages = {
   zh: "中文"
 };
 
+type Language = "en" | "es" | "de" | "fr" | "zh";
+
 interface LanguageSelectorProps {
-  onLanguageChange: (language: string) => void;
-  currentLanguage: string;
+  onLanguageChange: (language: Language) => void;
+  currentLanguage: Language;
 }
 
 export const LanguageSelector = ({ onLanguageChange, currentLanguage }: LanguageSelectorProps) => {
   return (
-    <Select value={currentLanguage} onValueChange={onLanguageChange}>
+    <Select value={currentLanguage} onValueChange={(value: Language) => onLanguageChange(value)}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select Language" />
       </SelectTrigger>
       <SelectContent>
         {Object.entries(languages).map(([code, name]) => (
-          <SelectItem key={code} value={code}>
+          <SelectItem key={code} value={code as Language}>
             {name}
           </SelectItem>
         ))}
