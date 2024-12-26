@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { LanguageSelector } from "./LanguageSelector";
 import { BlogContent } from "./BlogContent";
@@ -152,6 +152,16 @@ export const BlogPost = () => {
   const { slug } = useParams();
   const [language, setLanguage] = useState<Language>("en");
   
+  useEffect(() => {
+    // Track when a specific blog post is viewed
+    if (slug) {
+      posthog.capture('blog_post_viewed', {
+        post_slug: slug,
+        initial_language: language
+      });
+    }
+  }, [slug, language]);
+
   if (!slug || !translations[slug]) {
     return (
       <div className="max-w-4xl mx-auto p-6">
@@ -163,13 +173,22 @@ export const BlogPost = () => {
   const post = translations[slug][language];
 
   const handleLanguageChange = (newLanguage: Language) => {
-    setLanguage(newLanguage);
-    // Track language change event
+    // Existing language change tracking
     posthog.capture('language_changed', {
       from: language,
       to: newLanguage,
       post_slug: slug
     });
+
+    // Additional custom event for more detailed tracking
+    posthog.capture('blog_post_language_interaction', {
+      previous_language: language,
+      new_language: newLanguage,
+      post_slug: slug,
+      timestamp: new Date().toISOString()
+    });
+
+    setLanguage(newLanguage);
   };
 
   if (!post) {
