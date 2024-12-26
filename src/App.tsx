@@ -10,8 +10,8 @@ import posthog from 'posthog-js';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-// Initialize PostHog with a public key
-posthog.init('phc_your_public_key_here', {
+// Initialize PostHog with environment variable
+posthog.init(import.meta.env.VITE_POSTHOG_KEY || '', {
   api_host: 'https://app.posthog.com',
   loaded: (posthog) => {
     if (process.env.NODE_ENV === 'development') posthog.debug();
@@ -22,8 +22,10 @@ function PostHogPageView() {
   const location = useLocation();
 
   useEffect(() => {
-    // Track page views
-    posthog.capture('$pageview');
+    // Only track page views if PostHog is properly initialized
+    if (import.meta.env.VITE_POSTHOG_KEY) {
+      posthog.capture('$pageview');
+    }
   }, [location]);
 
   return null;
