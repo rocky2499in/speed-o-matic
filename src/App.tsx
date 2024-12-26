@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import { BlogPost } from "./components/blog/BlogPost";
+import { Layout } from "./components/layout/Layout";
 import posthog from 'posthog-js';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -41,10 +42,12 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <PostHogPageView />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
-          </Routes>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+            </Routes>
+          </Layout>
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>
