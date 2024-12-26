@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { toast } from "@/components/ui/use-toast";
 import ServerSelection, { Server, servers } from "./ServerSelection";
 import RegionalComparison from "./RegionalComparison";
-import { SpeedTestHeader } from "./speed/SpeedTestHeader";
 import { SpeedTestProgress } from "./speed/SpeedTestProgress";
 import { SpeedTestResults } from "./speed/SpeedTestResults";
 import { Footer } from "./speed/Footer";
@@ -89,10 +88,6 @@ const SpeedTest = () => {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-background">
       <div className="w-full max-w-md mx-auto space-y-8 animate-fade-in p-4 md:p-8">
-        <header>
-          <SpeedTestHeader />
-        </header>
-        
         <section 
           className="bg-secondary/30 backdrop-blur-sm rounded-xl p-6 shadow-lg space-y-8"
           aria-label="Speed Test Section"
