@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { LanguageSelector } from "./LanguageSelector";
 import { BlogContent } from "./BlogContent";
+import posthog from 'posthog-js';
 
 type Language = "en" | "es" | "de" | "fr" | "zh";
 
@@ -161,6 +162,16 @@ export const BlogPost = () => {
 
   const post = translations[slug][language];
 
+  const handleLanguageChange = (newLanguage: Language) => {
+    setLanguage(newLanguage);
+    // Track language change event
+    posthog.capture('language_changed', {
+      from: language,
+      to: newLanguage,
+      post_slug: slug
+    });
+  };
+
   if (!post) {
     return (
       <div className="max-w-4xl mx-auto p-6">
@@ -175,7 +186,7 @@ export const BlogPost = () => {
         <h1 className="text-3xl font-bold">{post.title}</h1>
         <LanguageSelector 
           currentLanguage={language}
-          onLanguageChange={setLanguage}
+          onLanguageChange={handleLanguageChange}
         />
       </div>
       <BlogContent 
