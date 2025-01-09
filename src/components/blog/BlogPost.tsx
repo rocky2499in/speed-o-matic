@@ -40,13 +40,15 @@ export const BlogPost = () => {
     setLanguage(newLanguage);
   };
 
+  const defaultDescription = `Comprehensive internet speed test guide for ${post.title}`;
+
   return (
     <>
       <Helmet>
         <title>{post.title} | Speed Test Guide</title>
-        <meta name="description" content={post.description || `Comprehensive internet speed test guide for ${post.title}.`} />
+        <meta name="description" content={post.description || defaultDescription} />
         <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={post.description || `Comprehensive internet speed test guide for ${post.title}.`} />
+        <meta property="og:description" content={post.description || defaultDescription} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={window.location.href} />
         <link rel="canonical" href={window.location.href} />
