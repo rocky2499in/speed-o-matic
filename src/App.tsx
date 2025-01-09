@@ -16,7 +16,8 @@ posthog.init(import.meta.env.VITE_POSTHOG_KEY || '', {
   api_host: 'https://app.posthog.com',
   loaded: (posthog) => {
     if (process.env.NODE_ENV === 'development') posthog.debug();
-  }
+  },
+  autocapture: false // Disable autocapture to prevent URL issues
 });
 
 function PostHogPageView() {
@@ -25,14 +26,23 @@ function PostHogPageView() {
   useEffect(() => {
     // Only track page views if PostHog is properly initialized
     if (import.meta.env.VITE_POSTHOG_KEY) {
-      posthog.capture('$pageview');
+      posthog.capture('$pageview', {
+        $current_url: window.location.pathname // Ensure clean URL capture
+      });
     }
   }, [location]);
 
   return null;
 }
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false
+    }
+  }
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
