@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 import { LanguageSelector } from "./LanguageSelector";
 import { BlogContent } from "./BlogContent";
 import { translations } from "./translations";
 import { Language } from "./types";
 import posthog from 'posthog-js';
+import { Helmet } from "react-helmet";
 
 export const BlogPost = () => {
   const { slug } = useParams();
@@ -20,14 +21,14 @@ export const BlogPost = () => {
   }, [slug, language]);
 
   if (!slug || !translations[slug]) {
-    return (
-      <div className="max-w-4xl mx-auto p-6">
-        <h1 className="text-2xl font-bold text-center">Post not found</h1>
-      </div>
-    );
+    return <Navigate to="/" replace />;
   }
 
   const post = translations[slug][language];
+
+  if (!post) {
+    return <Navigate to="/" replace />;
+  }
 
   const handleLanguageChange = (newLanguage: Language) => {
     posthog.capture('language_changed', {
@@ -36,37 +37,33 @@ export const BlogPost = () => {
       post_slug: slug
     });
 
-    posthog.capture('blog_post_language_interaction', {
-      previous_language: language,
-      new_language: newLanguage,
-      post_slug: slug,
-      timestamp: new Date().toISOString()
-    });
-
     setLanguage(newLanguage);
   };
 
-  if (!post) {
-    return (
-      <div className="max-w-4xl mx-auto p-6">
-        <h1 className="text-2xl font-bold text-center">Translation not available</h1>
-      </div>
-    );
-  }
-
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="mb-6 flex justify-between items-center">
-        <h1 className="text-3xl font-bold">{post.title}</h1>
-        <LanguageSelector 
-          currentLanguage={language}
-          onLanguageChange={handleLanguageChange}
+    <>
+      <Helmet>
+        <title>{post.title} | Speed Test Guide</title>
+        <meta name="description" content={post.description || `Comprehensive internet speed test guide for ${post.title}.`} />
+        <meta property="og:title" content={post.title} />
+        <meta property="og:description" content={post.description || `Comprehensive internet speed test guide for ${post.title}.`} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={window.location.href} />
+        <link rel="canonical" href={window.location.href} />
+      </Helmet>
+      <div className="max-w-4xl mx-auto p-6">
+        <div className="mb-6 flex justify-between items-center">
+          <h1 className="text-3xl font-bold">{post.title}</h1>
+          <LanguageSelector 
+            currentLanguage={language}
+            onLanguageChange={handleLanguageChange}
+          />
+        </div>
+        <BlogContent 
+          content={post.content}
+          language={language}
         />
       </div>
-      <BlogContent 
-        content={post.content}
-        language={language}
-      />
-    </div>
+    </>
   );
 };
