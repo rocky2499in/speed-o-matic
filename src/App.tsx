@@ -14,7 +14,7 @@ import { useLocation } from 'react-router-dom';
 // Initialize PostHog with environment variable and proper configuration
 if (import.meta.env.VITE_POSTHOG_KEY) {
   posthog.init(import.meta.env.VITE_POSTHOG_KEY, {
-    api_host: 'https://app.posthog.com', // Ensure this URL is properly formatted
+    api_host: 'https://app.posthog.com',
     loaded: (posthog) => {
       if (process.env.NODE_ENV === 'development') posthog.debug();
     },
@@ -22,9 +22,13 @@ if (import.meta.env.VITE_POSTHOG_KEY) {
     capture_pageview: false, // We handle pageviews manually
     persistence: 'localStorage',
     bootstrap: {
-      distinctID: null,
+      distinctID: posthog.get_distinct_id() || undefined,
       isIdentifiedID: false,
     },
+    disable_compression: true, // Disable compression to help with debugging
+    disable_session_recording: true, // Disable session recording for now
+    _capture_metrics: false, // Disable metrics capture until properly configured
+    request_batching: false // Disable batching to help with debugging
   });
 }
 
@@ -32,14 +36,15 @@ function PostHogPageView() {
   const location = useLocation();
 
   useEffect(() => {
-    // Only capture pageview if PostHog is initialized
-    if (import.meta.env.VITE_POSTHOG_KEY) {
+    // Only capture pageview if PostHog is initialized and has a distinct_id
+    if (import.meta.env.VITE_POSTHOG_KEY && posthog.get_distinct_id()) {
       posthog.capture('$pageview', {
-        current_url: window.location.href, // Use full URL
+        current_url: window.location.href,
         path: location.pathname,
         search: location.search,
         title: document.title,
-        host: window.location.host
+        host: window.location.host,
+        distinct_id: posthog.get_distinct_id() // Explicitly include distinct_id
       });
     }
   }, [location]);
