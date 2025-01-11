@@ -1,25 +1,25 @@
 import { CityTranslations } from '../types';
 
 export const texasCityTranslations: Record<string, CityTranslations> = {
-  "san-antonio-speed-test": {
+  "houston-speed-test": {
     en: {
-      title: "San Antonio Internet Speed Test & Provider Guide",
+      title: "Houston Internet Speed Test & Provider Guide",
       content: `
-        <h2>San Antonio Internet Speed Guide</h2>
-        <p>As one of Texas's fastest-growing cities, San Antonio requires robust internet infrastructure to support its expanding population.</p>
+        <h2>Houston Internet Speed Guide</h2>
+        <p>As the largest city in Texas, Houston requires robust internet infrastructure to support its diverse population and growing tech sector.</p>
         
-        <h3>San Antonio Speed Averages</h3>
+        <h3>Houston Speed Averages</h3>
         <ul>
-          <li>Download: 200-940 Mbps</li>
-          <li>Upload: 100-880 Mbps</li>
+          <li>Download: 200-1000 Mbps</li>
+          <li>Upload: 100-1000 Mbps</li>
           <li>Latency: 8-25ms</li>
         </ul>
 
-        <h3>Provider Overview</h3>
-        <p>Spectrum and AT&T are the primary providers, with Google Fiber available in select areas. Local providers offer additional options.</p>
+        <h3>Major Providers</h3>
+        <p>Comcast Xfinity and AT&T Fiber are the primary providers, with Spectrum serving specific areas. 5G home internet is expanding through T-Mobile and Verizon.</p>
 
         <h3>Area Analysis</h3>
-        <p>Downtown and North San Antonio typically have the best coverage, while some outlying areas are seeing continued expansion.</p>
+        <p>Downtown Houston and The Woodlands typically enjoy excellent connectivity, while some suburban areas may have more limited options. Fiber deployment is ongoing throughout the region.</p>
       `
     }
   },
@@ -42,6 +42,28 @@ export const texasCityTranslations: Record<string, CityTranslations> = {
 
         <h3>Area Coverage</h3>
         <p>Downtown Dallas and Uptown enjoy extensive fiber coverage, while suburban areas have varying levels of service options.</p>
+      `
+    }
+  },
+  "san-antonio-speed-test": {
+    en: {
+      title: "San Antonio Internet Speed Test & Provider Guide",
+      content: `
+        <h2>San Antonio Internet Speed Guide</h2>
+        <p>As one of Texas's fastest-growing cities, San Antonio requires robust internet infrastructure to support its expanding population.</p>
+        
+        <h3>San Antonio Speed Averages</h3>
+        <ul>
+          <li>Download: 200-940 Mbps</li>
+          <li>Upload: 100-880 Mbps</li>
+          <li>Latency: 8-25ms</li>
+        </ul>
+
+        <h3>Provider Overview</h3>
+        <p>Spectrum and AT&T are the primary providers, with Google Fiber available in select areas. Local providers offer additional options.</p>
+
+        <h3>Area Analysis</h3>
+        <p>Downtown and North San Antonio typically have the best coverage, while some outlying areas are seeing continued expansion.</p>
       `
     }
   }
