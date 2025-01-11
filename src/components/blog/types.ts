@@ -3,7 +3,10 @@ export type Language = "en" | "es" | "de" | "fr" | "zh";
 export interface BlogTranslation {
   title: string;
   content: string;
-  description?: string;  // Making description optional
+  description?: string;
+  datePublished?: string;
+  dateModified?: string;
+  author?: string;
 }
 
 export interface CityTranslations {
