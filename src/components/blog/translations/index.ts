@@ -367,7 +367,7 @@ export const translations: Translations = {
         <p>Technologieorientierte Gebiete wie Mitte und Prenzlauer Berg verfügen typischerweise über höhere Internetgeschwindigkeiten, während einige Außenbezirke eine variablere Konnektivität aufweisen.</p>
       `
     }
-  }
+  },
   ...majorCityTranslations,
   ...texasCityTranslations,
   ...californiaCityTranslations
