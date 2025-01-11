@@ -1,8 +1,9 @@
-import { useParams, Navigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { BlogContent } from "./BlogContent";
 import posthog from 'posthog-js';
 import { Helmet } from "react-helmet";
 import { cityPages } from "./cityPages";
+import { useEffect } from 'react'; // Added missing import
 
 export const BlogPost = () => {
   const { slug } = useParams();
