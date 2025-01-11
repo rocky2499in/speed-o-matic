@@ -1,4 +1,7 @@
 import { Translations } from '../types';
+import { majorCityTranslations } from './major-cities';
+import { texasCityTranslations } from './texas-cities';
+import { californiaCityTranslations } from './california-cities';
 
 export const translations: Translations = {
   "new-york-speed-test": {
@@ -365,4 +368,7 @@ export const translations: Translations = {
       `
     }
   }
+  ...majorCityTranslations,
+  ...texasCityTranslations,
+  ...californiaCityTranslations
 };
