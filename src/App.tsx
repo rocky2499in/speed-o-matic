@@ -11,15 +11,20 @@ import posthog from 'posthog-js';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-// Initialize PostHog with environment variable
+// Initialize PostHog with environment variable and proper configuration
 if (import.meta.env.VITE_POSTHOG_KEY) {
   posthog.init(import.meta.env.VITE_POSTHOG_KEY, {
-    api_host: 'https://app.posthog.com',
+    api_host: 'https://app.posthog.com', // Ensure this URL is properly formatted
     loaded: (posthog) => {
       if (process.env.NODE_ENV === 'development') posthog.debug();
     },
     autocapture: true,
-    capture_pageview: false // We'll handle pageviews manually
+    capture_pageview: false, // We handle pageviews manually
+    persistence: 'localStorage',
+    bootstrap: {
+      distinctID: null,
+      isIdentifiedID: false,
+    },
   });
 }
 
@@ -27,13 +32,14 @@ function PostHogPageView() {
   const location = useLocation();
 
   useEffect(() => {
+    // Only capture pageview if PostHog is initialized
     if (import.meta.env.VITE_POSTHOG_KEY) {
-      // Capture page view with clean URL and additional metadata
       posthog.capture('$pageview', {
-        $current_url: window.location.pathname,
+        current_url: window.location.href, // Use full URL
         path: location.pathname,
         search: location.search,
-        title: document.title
+        title: document.title,
+        host: window.location.host
       });
     }
   }, [location]);
