@@ -15,64 +15,46 @@ const cityBlogs = [
     slug: "chicago-speed-test"
   },
   {
-    city: "Los Angeles",
-    title: "LA Internet Speed Test & Provider Analysis",
-    description: "Test and compare internet speeds across Los Angeles County. Find the best ISPs from Santa Monica to Downtown LA.",
-    slug: "los-angeles-speed-test"
+    city: "Houston",
+    title: "Houston Internet Speed Test & Coverage Guide",
+    description: "Complete analysis of internet speeds in Houston. Compare providers and find the best service for your area.",
+    slug: "houston-speed-test"
   },
   {
-    city: "San Francisco",
-    title: "San Francisco Bay Area Speed Test Guide",
-    description: "Compare internet speeds across the Bay Area. Find the fastest providers in SF, Silicon Valley, and East Bay.",
-    slug: "san-francisco-speed-test"
+    city: "Phoenix",
+    title: "Phoenix Internet Speed Test & Provider Guide",
+    description: "Comprehensive guide to internet speeds in Phoenix. Compare Cox, CenturyLink, and other providers.",
+    slug: "phoenix-speed-test"
   },
   {
-    city: "Seattle",
-    title: "Seattle Internet Speed Test & Provider Guide",
-    description: "Analyze internet speeds across Greater Seattle. Compare CenturyLink, Xfinity, and Wave performance.",
-    slug: "seattle-speed-test"
+    city: "Philadelphia",
+    title: "Philadelphia Internet Speed Test & Coverage Analysis",
+    description: "Test and compare internet speeds across Philadelphia. Find the best providers from Center City to the suburbs.",
+    slug: "philadelphia-speed-test"
   },
   {
-    city: "Washington DC",
-    title: "DC Metro Area Internet Speed Analysis",
-    description: "Test internet speeds in the Capital Region. Compare Verizon, Xfinity, and RCN across DC, Maryland, and Virginia.",
-    slug: "washington-dc-speed-test"
+    city: "San Antonio",
+    title: "San Antonio Internet Speed Test & Provider Guide",
+    description: "Compare internet speeds and providers across San Antonio. Find the fastest and most reliable service.",
+    slug: "san-antonio-speed-test"
   },
   {
-    city: "Boston",
-    title: "Boston Internet Speed Test & ISP Guide",
-    description: "Compare internet speeds across Greater Boston. Find the best providers from Cambridge to Quincy.",
-    slug: "boston-speed-test"
+    city: "San Diego",
+    title: "San Diego Internet Speed Test & Coverage Guide",
+    description: "Comprehensive guide to internet speeds in San Diego. Compare Cox, Spectrum, AT&T, and more.",
+    slug: "san-diego-speed-test"
   },
   {
-    city: "Melbourne",
-    title: "Melbourne NBN Speed Test Guide",
-    description: "Test your NBN speeds across Melbourne. Compare providers and plans across Victoria's capital.",
-    slug: "melbourne-speed-test"
+    city: "Dallas",
+    title: "Dallas Internet Speed Test & Provider Analysis",
+    description: "Test and compare internet speeds across Dallas. Find the best providers and plans for your neighborhood.",
+    slug: "dallas-speed-test"
   },
   {
-    city: "Sydney",
-    title: "Sydney Internet Speed Test & NBN Guide",
-    description: "Comprehensive NBN speed test guide for Sydney. Compare providers across all metro areas.",
-    slug: "sydney-speed-test"
-  },
-  {
-    city: "Frankfurt",
-    title: "Frankfurt Internet Speed Test Guide",
-    description: "Test internet speeds in Frankfurt am Main. Compare Deutsche Telekom, Vodafone, and local providers.",
-    slug: "frankfurt-speed-test"
-  },
-  {
-    city: "Stuttgart",
-    title: "Stuttgart Internet Speed Analysis",
-    description: "Compare internet speeds across Stuttgart region. Find the best providers in Baden-Württemberg's capital.",
-    slug: "stuttgart-speed-test"
-  },
-  {
-    city: "Berlin",
-    title: "Berlin Internet Speed Test & Provider Guide",
-    description: "Test internet speeds across Berlin districts. Compare all major German ISPs and local providers.",
-    slug: "berlin-speed-test"
+    city: "San Jose",
+    title: "San Jose Internet Speed Test & Silicon Valley Guide",
+    description: "Compare internet speeds across San Jose and Silicon Valley. Find the fastest fiber and cable options.",
+    slug: "san-jose-speed-test"
   }
 ];
 
@@ -90,7 +72,7 @@ export const BlogPosts = () => {
             <CardContent>
               <p className="text-muted-foreground">{blog.description}</p>
               <Link 
-                to={`/blog/${blog.slug}`}
+                to={`/${blog.slug}`}
                 className="inline-block mt-4 text-primary hover:underline"
               >
                 Read More →
