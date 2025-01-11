@@ -3,10 +3,9 @@ import SpeedTest from "../SpeedTest";
 
 interface BlogContentProps {
   content: string;
-  language: string;
 }
 
-export const BlogContent = ({ content, language }: BlogContentProps) => {
+export const BlogContent = ({ content }: BlogContentProps) => {
   return (
     <Card className="p-6">
       <div 
