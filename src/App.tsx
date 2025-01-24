@@ -19,7 +19,7 @@ if (import.meta.env.VITE_POSTHOG_KEY) {
   localStorage.setItem('ph_distinct_id', distinctId);
 
   posthog.init(import.meta.env.VITE_POSTHOG_KEY, {
-    api_host: 'https://us.i.posthog.com', // Updated to correct endpoint
+    api_host: 'https://us.i.posthog.com',
     loaded: (posthog) => {
       if (process.env.NODE_ENV === 'development') posthog.debug();
       // Identify user with distinct_id
