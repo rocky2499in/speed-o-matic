@@ -13,22 +13,28 @@ import { useLocation } from 'react-router-dom';
 
 // Initialize PostHog with environment variable and proper configuration
 if (import.meta.env.VITE_POSTHOG_KEY) {
+  // Generate a persistent distinct_id if none exists
+  const distinctId = localStorage.getItem('ph_distinct_id') || 
+    `user_${Math.random().toString(36).substring(2, 15)}`;
+  localStorage.setItem('ph_distinct_id', distinctId);
+
   posthog.init(import.meta.env.VITE_POSTHOG_KEY, {
-    api_host: 'https://app.posthog.com',
+    api_host: 'https://us.i.posthog.com', // Updated to correct endpoint
     loaded: (posthog) => {
       if (process.env.NODE_ENV === 'development') posthog.debug();
+      // Identify user with distinct_id
+      posthog.identify(distinctId);
     },
     autocapture: true,
     capture_pageview: false, // We handle pageviews manually
     persistence: 'localStorage',
     bootstrap: {
-      distinctID: posthog.get_distinct_id() || undefined,
-      isIdentifiedID: false,
+      distinctID: distinctId,
+      isIdentifiedID: true,
     },
-    disable_compression: true, // Disable compression to help with debugging
-    disable_session_recording: true, // Disable session recording for now
-    _capture_metrics: false, // Disable metrics capture until properly configured
-    request_batching: false // Disable batching to help with debugging
+    disable_compression: true,
+    disable_session_recording: true,
+    request_batching: false
   });
 }
 
@@ -36,15 +42,16 @@ function PostHogPageView() {
   const location = useLocation();
 
   useEffect(() => {
+    const distinctId = localStorage.getItem('ph_distinct_id');
     // Only capture pageview if PostHog is initialized and has a distinct_id
-    if (import.meta.env.VITE_POSTHOG_KEY && posthog.get_distinct_id()) {
+    if (import.meta.env.VITE_POSTHOG_KEY && distinctId) {
       posthog.capture('$pageview', {
         current_url: window.location.href,
         path: location.pathname,
         search: location.search,
         title: document.title,
         host: window.location.host,
-        distinct_id: posthog.get_distinct_id() // Explicitly include distinct_id
+        distinct_id: distinctId
       });
     }
   }, [location]);
