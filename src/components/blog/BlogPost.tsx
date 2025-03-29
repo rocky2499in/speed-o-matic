@@ -1,9 +1,10 @@
+
 import { useParams } from "react-router-dom";
 import { BlogContent } from "./BlogContent";
 import posthog from 'posthog-js';
 import { Helmet } from "react-helmet";
 import { cityPages } from "./cityPages";
-import { useEffect } from 'react'; // Added missing import
+import { useEffect } from 'react';
 
 export const BlogPost = () => {
   const { slug } = useParams();
@@ -44,6 +45,7 @@ export const BlogPost = () => {
 
   const post = cityPages[slug];
   const defaultDescription = `Comprehensive internet speed test guide for ${post.title}. Check internet speeds, compare providers, and find the best internet service in ${post.title.split('for ').pop()}.`;
+  const baseUrl = window.location.origin;
 
   return (
     <>
@@ -56,6 +58,8 @@ export const BlogPost = () => {
         <meta property="og:url" content={window.location.href} />
         <link rel="canonical" href={window.location.href} />
         <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+        <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         
         <script type="application/ld+json">
           {JSON.stringify({
@@ -67,7 +71,11 @@ export const BlogPost = () => {
             "publisher": {
               "@type": "Organization",
               "name": "Speedcheck Digital",
-              "url": "https://speedcheck.digital"
+              "url": baseUrl
+            },
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": window.location.href
             }
           })}
         </script>
