@@ -45,7 +45,7 @@ export const BlogPost = () => {
 
   const post = cityPages[slug];
   const defaultDescription = `Comprehensive internet speed test guide for ${post.title}. Check internet speeds, compare providers, and find the best internet service in ${post.title.split('for ').pop()}.`;
-  const baseUrl = window.location.origin;
+  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://speedcheck.digital';
 
   return (
     <>
@@ -55,8 +55,8 @@ export const BlogPost = () => {
         <meta property="og:title" content={post.title} />
         <meta property="og:description" content={post.description || defaultDescription} />
         <meta property="og:type" content="article" />
-        <meta property="og:url" content={window.location.href} />
-        <link rel="canonical" href={window.location.href} />
+        <meta property="og:url" content={typeof window !== 'undefined' ? window.location.href : `${baseUrl}/${slug}`} />
+        <link rel="canonical" href={typeof window !== 'undefined' ? window.location.href : `${baseUrl}/${slug}`} />
         <meta name="robots" content="index, follow" />
         <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -67,7 +67,7 @@ export const BlogPost = () => {
             "@type": "Article",
             "headline": post.title,
             "description": post.description || defaultDescription,
-            "url": window.location.href,
+            "url": typeof window !== 'undefined' ? window.location.href : `${baseUrl}/${slug}`,
             "publisher": {
               "@type": "Organization",
               "name": "Speedcheck Digital",
@@ -75,7 +75,7 @@ export const BlogPost = () => {
             },
             "mainEntityOfPage": {
               "@type": "WebPage",
-              "@id": window.location.href
+              "@id": typeof window !== 'undefined' ? window.location.href : `${baseUrl}/${slug}`
             }
           })}
         </script>
