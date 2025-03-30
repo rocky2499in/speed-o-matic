@@ -5,6 +5,7 @@ import posthog from 'posthog-js';
 import { Helmet } from "react-helmet";
 import { cityPages } from "./cityPages";
 import { useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 
 export const BlogPost = () => {
   const { slug } = useParams();
@@ -21,8 +22,13 @@ export const BlogPost = () => {
     document.documentElement.lang = 'en';
   }, [slug]);
 
-  // Early return with 404 metadata if post doesn't exist
-  if (!slug || !cityPages[slug]) {
+  // If no slug is provided, redirect to homepage
+  if (!slug) {
+    return <Navigate to="/" />;
+  }
+
+  // If the post doesn't exist in our city pages, show 404 page
+  if (!cityPages[slug]) {
     return (
       <>
         <Helmet>
